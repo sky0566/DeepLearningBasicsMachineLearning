@@ -12,13 +12,13 @@ headers = next(reader)  # 表头 Python2中是reader.next()
 # print(headers)
 
 featureList = []  # 特征值information
-lableList = [] # 最后标签
+labelList = [] # 最后标签
 
 for row in reader:
-    lableList.append(row[len(row) - 1])
+    labelList.append(row[len(row) - 1])  # 取最后一列
     rowDict = {}  # 对应字典
     for i in range(1, len(row) - 1):
-        rowDict[headers[i]] = row[i]
+        rowDict[headers[i]] = row[i]  # 将数据保存为字典，不含最后一列
     featureList.append(rowDict)
 
 print(featureList)
@@ -30,11 +30,11 @@ dummyX = vec.fit_transform(featureList).toarray()
 print("dummyX:" + str(dummyX))
 print(vec.get_feature_names())
 
-print("labelList:" + str(lableList))
+print("labelList:" + str(labelList))
 
 # Vectorize class labels
 lb = preprocessing.LabelBinarizer()
-dummyY = lb.fit_transform(lableList)
+dummyY = lb.fit_transform(labelList)
 print("dummY:" + str(dummyY))
 
 # Using decision tree for classification
